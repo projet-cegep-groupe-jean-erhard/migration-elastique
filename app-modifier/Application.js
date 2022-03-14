@@ -1,18 +1,18 @@
 ﻿class Application {
-  constructor(window, vueListemdp, vuemdp, vueAjoutermdp/*, vueModifiermdp*/, mdpDAO){
+  constructor(window, vueListeMdp, vueMdp, vueAjouterMdp, vueModifierMdp, mdpDAO){
 
     this.window = window;
 
-    this.vueListemdp = vueListemdp;
+    this.vueListeMdp = vueListeMdp;
 
-    this.vuemdp = vuemdp;
+    this.vueMdp = vueMdp;
 
-    this.vueAjoutermdp = vueAjoutermdp;
+    this.vueAjouterMdp = vueAjouterMdp;
+    // C'est l'équivalent de function(mdp){this.ajouterMdp(mdp)}
+    this.vueAjouterMdp.initialiserAjoutermdp(mdp =>this.ajouterMdp(mdp));
 
-    // this.vueModifiermdp = vueModifiermdp;
-    // C'est l'équivalent de function(mdp){this.ajoutermdp(mdp)}
-    this.vueAjoutermdp.initialiserAjoutermdp(mdp =>this.ajoutermdp(mdp));
-    // this.vueModifiermdp.initialiserModifiermdp(mdp =>this.ajoutermdp(mdp));
+    this.vueModifierMdp = vueModifierMdp;
+    this.vueModifierMdp.initialiserModifierMdp(mdp =>this.modifierMdp(mdp));
 
     this.mdpDAO = mdpDAO;
 
@@ -27,46 +27,59 @@
 
     if(!hash){
 
-      this.mdpDAO.lister((listemdp) => this.afficherNouvelleListemdp(listemdp));
+      this.mdpDAO.lister((listeMdp) => this.afficherNouvelleListeMdp(listeMdp));
 
     }else if(hash.match(/^#ajouter-mdp/)){
 
-      this.vueAjoutermdp.afficher();
+      this.vueAjouterMdp.afficher();
 
-    }else if(hash.match(/^#modifier-mdp/)){
+    }else if(hash.match(/^#modifier-mdp\/([0-9]+)/)){
 
-      // this.vueModifiermdp.afficher();
+      let navigation =  hash.match(/^#modifier-mdp\/([0-9]+)/);
+      let idMdp = navigation[1];
 
+
+      this.mdpDAO.chercher(idMdp, (mdp) => this.afficherModifierMdp(mdp));
     }else{
 
       let navigation = hash.match(/^#mdp\/([0-9]+)/);
-      let idmdp = navigation[1];
+      let idMdp = navigation[1];
 
-      this.mdpDAO.chercher(idmdp, (mdp) => this.afficherNouveaumdp(mdp));
+      this.mdpDAO.chercher(idMdp, (mdp) => this.afficherNouveauMdp(mdp));
     }
   }
 
-  afficherNouvelleListemdp(listemdp){
+  afficherNouvelleListeMdp(listeMdp){
 
-    console.log(listemdp);
-    this.vueListemdp.initialiserListemdp(listemdp);
-    this.vueListemdp.afficher();
+    console.log(listeMdp);
+    this.vueListeMdp.initialiserListemdp(listeMdp);
+    this.vueListeMdp.afficher();
   }
 
-  afficherNouveaumdp(mdp){
+  afficherNouveauMdp(mdp){
     console.log(mdp);
-    this.vuemdp.initialisermdp(mdp);
-    this.vuemdp.afficher();
+    this.vueMdp.initialisermdp(mdp);
+    this.vueMdp.afficher();
   }
 
-  ajoutermdp(mdp){
-    this.mdpDAO.ajouter(mdp, () => this.afficherListemdp());
+  afficherModifierMdp(mdp){
+    console.log(mdp);
+    this.vueModifierMdp.setMdpModif(mdp);
+    this.vueModifierMdp.afficher();
   }
 
-  afficherListemdp(){
+  ajouterMdp(mdp){
+    this.mdpDAO.ajouter(mdp, () => this.afficherListeMdp());
+  }
+
+  modifierMdp(mdp){
+    console.log(mdp);
+    this.mdpDAO.modifier(mdp, () => this.afficherListeMdp());
+  }
+
+  afficherListeMdp(){
     this.window.location.hash = "#";
   }
 }
 
-new Application(window, new VueListeMdp(), new VueMdp(), new VueAjouterMdp()/*, new VueModifierMdp()*/, new MdpDAO());
-
+new Application(window, new VueListeMdp(), new VueMdp(), new VueAjouterMdp(), new VueModifierMdp(), new MdpDAO());

@@ -62,4 +62,22 @@
                 action();
             });
     }
+
+    modifier(motDePasse, action){
+        console.log("dedefe" + motDePasse)
+        fetch(this.URL + 'modifier.php',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type':'application/x-www-form-urlencoded'
+                },
+                body: JSON.stringify(motDePasse),
+            })
+            .then(response => response.text())
+            .then(data =>
+            {
+                console.log('Détail:', data);
+                action();
+            });
+    }
 }

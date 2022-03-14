@@ -50,17 +50,28 @@ class MotDePasseDAO extends Accesseur implements MotDePasseSQL
     MotDePasseDAO::initialiser();
 
     $demandeAjoutMotDePasse = MotDePasseDAO::$baseDeDonnees->prepare(MotDePasseDAO::SQL_AJOUTER);
-    $demandeAjoutMotDePasse->bindValue(':siteWeb', $motDePasse->nom, PDO::PARAM_STR);
-    $demandeAjoutMotDePasse->bindValue(':url', $motDePasse->marque, PDO::PARAM_STR);
-    $demandeAjoutMotDePasse->bindValue(':mdp', $motDePasse->description, PDO::PARAM_STR);
-    $demandeAjoutMotDePasse->bindValue(':questionSecrete', $motDePasse->description, PDO::PARAM_STR);
-    $demandeAjoutMotDePasse->bindValue(':reponseSecrete', $motDePasse->description, PDO::PARAM_STR);
+    $demandeAjoutMotDePasse->bindValue(':siteWeb', $motDePasse->siteWeb, PDO::PARAM_STR);
+    $demandeAjoutMotDePasse->bindValue(':url', $motDePasse->url, PDO::PARAM_STR);
+    $demandeAjoutMotDePasse->bindValue(':mdp', $motDePasse->mdp, PDO::PARAM_STR);
+    $demandeAjoutMotDePasse->bindValue(':questionSecrete', $motDePasse->questionSecrete, PDO::PARAM_STR);
+    $demandeAjoutMotDePasse->bindValue(':reponseSecrete', $motDePasse->reponseSecrete, PDO::PARAM_STR);
     $demandeAjoutMotDePasse->execute();
     return MotDePasseDAO::$baseDeDonnees->lastInsertId();
   }
 
   public static function modifier($motDePasse)
-  {
-    //TODO
-  }
+    {
+      MotDePasseDAO::initialiser();
+            error_log(print_r($motDePasse));
+          $demandeAjoutMotDePasse = MotDePasseDAO::$baseDeDonnees->prepare(MotDePasseDAO::SQL_MODIFIER);
+          $demandeAjoutMotDePasse->bindValue(':siteWeb', $motDePasse->siteWeb, PDO::PARAM_STR);
+          $demandeAjoutMotDePasse->bindValue(':url', $motDePasse->url, PDO::PARAM_STR);
+          $demandeAjoutMotDePasse->bindValue(':mdp', $motDePasse->mdp, PDO::PARAM_STR);
+          $demandeAjoutMotDePasse->bindValue(':questionSecrete', $motDePasse->questionSecrete, PDO::PARAM_STR);
+          $demandeAjoutMotDePasse->bindValue(':reponseSecrete', $motDePasse->reponseSecrete, PDO::PARAM_STR);
+          $demandeAjoutMotDePasse->bindValue(':id', $motDePasse->id, PDO::PARAM_INT);
+          $demandeAjoutMotDePasse->execute();
+
+          return MotDePasseDAO::$baseDeDonnees;
+    }
 }

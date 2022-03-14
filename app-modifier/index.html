@@ -10,6 +10,7 @@
   <script src="VueMdp.js"></script>
   <script src="VueListeMdp.js"></script>
   <script src="VueAjouterMdp.js"></script>
+  <script src="VueModifierMdp.js"></script>
   <!--
   https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/What_is_JavaScript#Script_loading_strategies
   Scripts loaded using the defer attribute will run in the order they appear
@@ -21,15 +22,22 @@
 <body>
 <div id="page-chargement-application">Chargement de l'application gestionnaire de mots de passe
   <div class="cadena"></div>
+
 </div>
 
-
+<input type="hidden" id="mdp-id"/>
 <script type="plain/text" id="html-vue-liste-mdp">
   <div class="page">
     <h1>Gestionnaire de mots de passe</h1>
     <a class="action" href="#ajouter-mdp">Ajouter un mot de passe !</a>
     <ul id="liste-mdp">
-      <li><img src="decoration/illustration/key.png" width="30" /> <a href="#mdp/{MotDePasse.id}" class="liste-mdp-item">{MotDePasse.siteWeb}</a></li>
+      <li>
+      <img src="decoration/illustration/key.png" width="30" />
+        <a href="#mdp/{MotDePasse.id}" class="liste-mdp-item">{MotDePasse.siteWeb}
+          <a style="border-radius: 0;background-color: var(--theme-bleu-fonce);font-size: 20px;vertical-align: middle;" href="#modifier-mdp/{MotDePasse.id}" class="liste-mdp-item">(modifier)
+          </a>
+        </a>
+      </li>
     </ul>
     <img id="secu" src="decoration/illustration/securite.png"/>
   </div>
@@ -57,6 +65,45 @@
     <form id="formulaire-ajouter">
       <fieldset>
         <legend>Identification du site web</legend>
+        <div>
+          <label for="mdp-siteWeb">Site web</label>
+          <input type="text" id="mdp-siteWeb"/>
+        </div>
+        <div>
+          <label for="mdp-url">Url</label>
+          <input type="text" id="mdp-url"/>
+        </div>
+      </fieldset>
+      <br>
+      <fieldset>
+        <legend>D&eacute;tails sur le mot de passe</legend>
+        <div>
+          <label for="mdp-mdp">Mot de passe</label>
+          <input type="text" id="mdp-mdp"/>
+        </div>
+        <div>
+          <label for="mdp-questionSecrete">Question secrete</label>
+          <textarea id="mdp-questionSecrete"></textarea>
+        </div>
+        <div>
+          <label for="mdp-reponseSecrete">Reponse secrete</label>
+          <textarea id="mdp-reponseSecrete"></textarea>
+        </div>
+      </fieldset>
+      <input class="action" type="submit" id="enregistrer" value="Enregistrer"/>
+    </form>
+    <a href="#" class="action">Annuler et revenir &agrave; la liste</a>
+  </div>
+
+  </script>
+
+  <script type="plain/text" id="html-vue-modifier-mdp">
+  <div class="page">
+    <h1>Modifier un mdp</h1>
+    <form id="formulaire-modifier">
+      <fieldset>
+        <legend>Identification du site web</legend>
+
         <div>
           <label for="mdp-siteWeb">Site web</label>
           <input type="text" id="mdp-siteWeb"/>

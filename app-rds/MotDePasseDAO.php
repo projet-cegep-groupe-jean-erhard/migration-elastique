@@ -9,7 +9,7 @@ class Accesseur
   public static function initialiser()
   {
     $base = 'app-mot-de-passe';
-    $hote = '3.97.107.117';
+    $hote = 'app-mot-de-passe.cwzqbwnooagp.ca-central-1.rds.amazonaws.com';
     $usager = 'julien';
     $motDePasse = 'julienjulien';
     $nomDeSourceDeDonnees = 'mysql:dbname=' . $base . ';host=' . $hote;
@@ -50,11 +50,11 @@ class MotDePasseDAO extends Accesseur implements MotDePasseSQL
     MotDePasseDAO::initialiser();
 
     $demandeAjoutMotDePasse = MotDePasseDAO::$baseDeDonnees->prepare(MotDePasseDAO::SQL_AJOUTER);
-    $demandeAjoutMotDePasse->bindValue(':siteWeb', $motDePasse->nom, PDO::PARAM_STR);
-    $demandeAjoutMotDePasse->bindValue(':url', $motDePasse->marque, PDO::PARAM_STR);
-    $demandeAjoutMotDePasse->bindValue(':mdp', $motDePasse->description, PDO::PARAM_STR);
-    $demandeAjoutMotDePasse->bindValue(':questionSecrete', $motDePasse->description, PDO::PARAM_STR);
-    $demandeAjoutMotDePasse->bindValue(':reponseSecrete', $motDePasse->description, PDO::PARAM_STR);
+    $demandeAjoutMotDePasse->bindValue(':siteWeb', $motDePasse->siteWeb, PDO::PARAM_STR);
+    $demandeAjoutMotDePasse->bindValue(':url', $motDePasse->url, PDO::PARAM_STR);
+    $demandeAjoutMotDePasse->bindValue(':mdp', $motDePasse->mdp, PDO::PARAM_STR);
+    $demandeAjoutMotDePasse->bindValue(':questionSecrete', $motDePasse->questionSecrete, PDO::PARAM_STR);
+    $demandeAjoutMotDePasse->bindValue(':reponseSecrete', $motDePasse->reponseSecrete, PDO::PARAM_STR);
     $demandeAjoutMotDePasse->execute();
     return MotDePasseDAO::$baseDeDonnees->lastInsertId();
   }
