@@ -11,7 +11,6 @@ $motDePasseJSON = file_get_contents('php://input');
 $motDePasseObjet = json_decode( $motDePasseJSON );
 $motDePasse = new MotDePasse($motDePasseObjet);
 
-$motDePasse = MotDePasseDAO::chercherParId($motDePasse->id);
-$id = MotDePasseDAO::modifier($motDePasse->id, $motDePasseObjet);
+$id = MotDePasseDAO::modifier($motDePasse);
 
-echo json_encode($id);
+echo json_decode( $motDePasseJSON );

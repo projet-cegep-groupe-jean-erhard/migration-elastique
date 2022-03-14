@@ -4,11 +4,11 @@ class MotDePasse implements JsonSerializable
   public static $filtres =
     array(
       'id' => FILTER_VALIDATE_INT,
-      'siteWeb' => FILTER_SANITIZE_ENCODED,
-      'url' => FILTER_SANITIZE_ENCODED,
-      'mdp' => FILTER_SANITIZE_ENCODED,
-      'questionSecrete' => FILTER_SANITIZE_ENCODED,
-      'reponseSecrete' => FILTER_SANITIZE_ENCODED
+      'siteWeb' => FILTER_SANITIZE_STRING,
+      'url' => FILTER_SANITIZE_STRING,
+      'mdp' => FILTER_SANITIZE_STRING,
+      'questionSecrete' => FILTER_SANITIZE_STRING,
+      'reponseSecrete' => FILTER_SANITIZE_STRING
     );
 
   protected $id;
